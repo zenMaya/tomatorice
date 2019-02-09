@@ -1,0 +1,21 @@
+set $wallpaper /home/yachimm_thomasegh/.config/wpg/wallpapers/fog_branches_trees.jpg
+
+set $background #0e0f10
+set $foreground #f8feff
+
+set $color0 #0e0f10
+set $color1 #374753
+set $color2 #827CA7
+set $color3 #75889C
+set $color4 #4C5D6D
+set $color5 #9EACC0
+set $color6 #63748A
+set $color7 #e4e9ef
+set $color8 #202325
+set $color9 #3e5d74
+set $color10 #9b8eeb
+set $color11 #86b0dc
+set $color12 #567999
+set $color13 #b6dbff
+set $color14 #7194c2
+set $color15 #f8feff

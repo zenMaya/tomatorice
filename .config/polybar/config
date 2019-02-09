@@ -1,0 +1,60 @@
+[bar/top]
+modules-left = i3 title pulseaudio player-mpris-tail
+modules-center = date
+modules-right = network filesystem cpu memory keyboard
+
+module-margin = 5
+
+separator = |
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+;------------------------------------
+[module/cpu]
+type = internal/cpu
+interval = 0.5
+;------------------------------------
+[module/date]
+type = internal/date
+time = %H:%M:%S
+date = %d.%m. %Y
+label = %time% %date%
+; Seconds to sleep between updates
+interval = 1.0
+;------------------------------------
+[module/filesystem]
+type = internal/fs
+
+; Mountpoints to display
+mount-0 = /
+mount-1 = /home
+mount-2 = /tmp
+;------------------------------------
+[module/i3]
+type = internal/i3
+;------------------------------------
+[module/memory]
+type = internal/memory
+;------------------------------------
+[module/wired-network]
+type = internal/network
+interface = enp33s0
+;------------------------------------
+[module/pulseaudio]
+type = internal/pulseaudio
+;------------------------------------
+[module/keyboard]
+type = internal/xkeyboard
+;------------------------------------
+[module/title]
+type = internal/xwindow
+;------------------------------------
+[module/player-mpris-tail]
+type = custom/script
+exec = ~/.scripts/player-mpris-tail.py -f '{icon} {artist} - {title}'
+tail = true
+label = %output%
+click-left = ~/.scripts/player-mpris-tail.py previous
+click-right = ~/.scripts/player-mpris-tail.py next
+click-middle = ~/.scripts/player-mpris-tail.py play-pause
