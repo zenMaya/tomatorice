@@ -2,9 +2,10 @@ set -U fish_user_paths $HOME/.scripts /home/yachimm_thomasegh/.gem/ruby/2.6.0/bi
 
 #(ruby -e 'print Gem.user_dir')/bin
 
-set -U $TERMINAL terminator
-set -U $BROWSER surf
-set -U $EDITOR nvim
+set -Ux TERMINAL terminator
+set -Ux BROWSER firefox
+set -Ux EDITOR nvim
+set -Ux GIT_EDITOR nvim
 
 ##############ALIASES##############
 function ls

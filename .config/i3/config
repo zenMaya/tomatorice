@@ -25,8 +25,6 @@ exec --no-startup-id feh --randomize --bg-scale ~/.wallpapers/
 exec --no-startup-id dunst
 # Composite manager:
 exec --no-startup-id compton
-# Alt Shift to change layout
-exec "setxkbmap -option 'grp:alt_shift_toggle' -layout us,cz -variant ,qwerty"
 #Polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 

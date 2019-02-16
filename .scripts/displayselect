@@ -69,7 +69,7 @@ case "$chosen" in
 esac
 
 # Fix feh background if screen size/arangement has changed.
-feh --bg-scale "$HOME/.config/wall.png"
+feh --randomize "$HOME/.wallpapersx".
 # Re-remap keys if keyboard added (for laptop bases)
 remaps
 # Restart dunst to ensure proper location on screen
