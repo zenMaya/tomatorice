@@ -2,7 +2,7 @@ set -U fish_user_paths $HOME/.scripts /home/yachimm_thomasegh/.gem/ruby/2.6.0/bi
 
 #(ruby -e 'print Gem.user_dir')/bin
 
-set -Ux TERMINAL terminator
+set -Ux TERMINAL termite
 set -Ux BROWSER firefox
 set -Ux EDITOR nvim
 set -Ux GIT_EDITOR nvim
@@ -12,7 +12,7 @@ function ls
     command ls --color=auto $argv
 end
 function lsa
-    command ls -a --color=auto $argv
+    command ls -cClAh --color=auto $argv
 end
 
 function config
