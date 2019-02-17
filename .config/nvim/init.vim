@@ -1,9 +1,7 @@
 scriptencoding utf-8
 " Plugins will be downloaded under the specified directory.
 call plug#begin('~/.vim/plugged')
-
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
 Plug 'dag/vim-fish'
@@ -27,6 +25,10 @@ call plug#end()
     set expandtab           " Insert spaces when TAB is pressed.
     set tabstop=2           " Render TABs using this many spaces.
     set shiftwidth=2        " Indentation amount for < and > commands.
+
+    set mouse=a
+
+    set noshowmode
 
     set nojoinspaces        " Prevents inserting two spaces after punctuation on a join (J)
 
@@ -113,12 +115,6 @@ call plug#end()
 " Toggle between normal and relative numbering.
     nnoremap <leader>n :call NumberToggle()<cr>
 
-" Enable the list of buffers
-    let g:airline#extensions#tabline#enabled = 1
-
-" Show just the filename
-    let g:airline#extensions#tabline#fnamemod = ':t'
-
 " This allows buffers to be hidden if you've modified a buffer.
 " This is almost a must if you wish to use buffers in this way.
     set hidden
@@ -151,37 +147,6 @@ call plug#end()
 " This can be useful if you are combining ALE with
 " some other plugin which sets quickfix errors, etc.
 "    let g:ale_keep_list_window_open = 1
-
-"Airline
-  let g:airline_powerline_fonts = 1
-  let g:airline_theme='powerlineish'
-
-  if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-  endif
-
-" unicode symbols
-    let g:airline_left_sep = '»'
-    let g:airline_left_sep = '▶'
-    let g:airline_right_sep = '«'
-    let g:airline_right_sep = '◀'
-    let g:airline_symbols.linenr = '␊'
-    let g:airline_symbols.linenr = '␤'
-    let g:airline_symbols.linenr = '¶'
-    let g:airline_symbols.branch = '⎇'
-    let g:airline_symbols.paste = 'ρ'
-    let g:airline_symbols.paste = 'Þ'
-    let g:airline_symbols.paste = '∥'
-    let g:airline_symbols.whitespace = 'Ξ'
-
-" airline symbols
-    let g:airline_left_sep = ''
-    let g:airline_left_alt_sep = ''
-    let g:airline_right_sep = ''
-    let g:airline_right_alt_sep = ''
-    let g:airline_symbols.branch = ''
-    let g:airline_symbols.readonly = ''
-    let g:airline_symbols.linenr = ''
 
 " Change shell to bash
    if &shell =~# 'fish$'
@@ -240,7 +205,7 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  if &filetype == 'vim'
+  if &filetype ==? 'vim'
     execute 'h '.expand('<cword>')
   else
     call CocAction('doHover')
@@ -248,7 +213,7 @@ function! s:show_documentation()
 endfunction
 
 " Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+augroup autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
