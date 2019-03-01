@@ -1,0 +1,1 @@
+/home/yachimm_thomasegh/.emacs.d/straight/repos/emacs-ccls/ccls-common.el

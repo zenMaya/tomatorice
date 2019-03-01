@@ -1,0 +1,233 @@
+
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(package-initialize)
+
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package 'use-package)
+
+(eval-when-compile
+  (require 'use-package))
+
+(use-package evil
+  :straight t
+  :ensure t
+  :init
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
+  :config
+  (setq evil-auto-indent t)
+  (setq evil-shift-width 2)
+  (setq evil-split-window-below t)
+  (setq evil-vsplit-window-right t)
+  (evil-mode 1))
+
+(use-package evil-collection
+  :straight t
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
+
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(use-package doom-modeline
+  :straight t
+  :ensure t
+  :hook (after-init . doom-modeline-mode))
+(use-package all-the-icons :straight t)
+(use-package git-gutter
+  :straight t
+  :hook (prog-mode . git-gutter-mode))
+
+(straight-use-package 'treemacs)
+(straight-use-package 'treemacs-evil)
+(straight-use-package 'treemacs-projectile)
+
+(use-package lsp-mode
+  :straight t
+  :hook (prog-mode . lsp)
+  :config
+  (setq lsp-prefer-flymake nil)
+  (setq lsp-ui-flycheck-error-list t))
+(use-package lsp-ui
+  :straight t
+  :commands lsp-ui-mode)
+(straight-use-package 'flycheck)
+
+(use-package company
+  :straight t
+  :config
+  (setq company-idle-dalay 0)
+  (setq company-minimum-prefix-length 1)
+  (setq company-selection-wrap-around t)
+  (company-tng-configure-default)
+
+  :hook (prog-mode . global-company-mode)
+  :bind ( "C-SPC" . company-complete))
+(use-package company-lsp
+  :straight t
+  :commands company-lsp
+  :config (push `company-lsp company-backends))
+(straight-use-package 'projectile)
+
+(use-package ivy :ensure t
+  :diminish (ivy-mode . "")             ; does not display ivy in the modeline
+  :straight t
+  :init
+  (ivy-mode 1)                          ; enable ivy globally at startup
+  :bind (:map ivy-minibuffer-map        ; bind in the ivy buffer
+       ("RET" . ivy-alt-done)
+       ("M-<"   . ivy-avy)
+       ("M->"   . ivy-dispatching-done)
+       ("M-+"   . ivy-call)
+       ("M-!"   . ivy-immediate-done)
+       ("M-["   . ivy-previous-history-element)
+       ("M-]"   . ivy-next-history-element))
+  :config
+  (setq ivy-use-virtual-buffers t)       ; extend searching to bookmarks and
+  (setq ivy-height 20)                   ; set height of the ivy window
+  (setq ivy-count-format "(%d/%d) ")     ; count format, from the ivy help page
+  (setq ivy-display-style 'fancy)
+  (setq ivy-format-function 'ivy-format-function-line) ; Make highlight extend all the way to the right
+  ;; TODO testing out the fuzzy search
+  (setq ivy-re-builders-alist
+      '((counsel-M-x . ivy--regex-fuzzy) ; Only counsel-M-x use flx fuzzy search
+        (t . ivy--regex-plus)))
+  (setq ivy-initial-inputs-alist nil))
+  
+(straight-use-package 'prescient)
+(straight-use-package 'ivy-prescient)
+(straight-use-package 'company-prescient)
+(use-package ivy-posframe
+  :straight t
+  :config (setq ivy-display-function #'ivy-posframe-display-at-frame-bottom-left))
+
+;;-----------------------------------------------------------------------------------
+;;THIS IS FOR C++/C
+(use-package ccls
+  :straight t
+  :after projectile
+  :custom
+  (ccls-args nil)
+  (ccls-executable (executable-find "ccls"))
+  (projectile-project-root-files-top-down-recurring
+   (append '("compile_commands.json" ".ccls")
+	   projectile-project-root-files-top-down-recurring))
+  :config (push ".ccls-cache" projectile-globally-ignored-directories))
+
+(use-package cmake-mode
+  :straight t
+  :mode ("CMakeLists\\.txt\\'" "\.cmake\\'"))
+
+(use-package cmake-font-lock
+  :straight t
+  :after (cmake-mode)
+  :hook (cmake-mode . cmake-font-lock-activate))
+
+(use-package cmake-ide
+  :straight t
+  :after projectile
+  :hook (c++-mode . my/cmake-ide-find-project)
+  :preface
+  (defun my/cmake-ide-find-project ()
+    "Finds the directory of the project for cmake-ide."
+    (with-eval-after-load 'projectile
+      (setq cmake-ide-project-dir (projectile-project-root))
+      (setq cmake-ide-build-dir (concat cmake-ide-project-dir "build")))
+    (setq cmake-ide-compile-command (concat "cd " cmake-ide-build-dir " && make"))
+    (cmake-ide-load-db))
+
+  (defun my/switch-to-compilation-window ()
+    "Switches to the *compilation* buffer after compilation."
+    (other-window 1))
+  :bind ([remap comment-region] . cmake-ide-compile)
+  :init (cmake-ide-setup)
+  :config (advice-add 'cmake-ide-compile :after #'my/switch-to-compilation-window))
+
+(use-package google-c-style
+  :straight t
+  :hook ((c-mode c++-mode) . google-set-c-style)
+         (c-mode-common . google-make-newline-indent))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;;---------------------------------------------------------------------------------------------------------
+;;BORDELBORDELBORDELBORDELBORDELBORDELBORDELBORDELBORDELBORDELBORDELBORDELBORDELBORDELBORDELBORDELBORDELBORDEL
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(ccls-args nil)
+ '(ccls-executable "/usr/bin/ccls")
+ '(company-backends
+   (quote
+    ((company-clang company-dabbrev-code company-gtags company-etags company-keywords company-cmake company-files)
+     company-oddmuse company-dabbrev company-abbrev company-bbdb company-ispell)))
+ '(company-quickhelp-color-background "#4F4F4F")
+ '(company-quickhelp-color-foreground "#DCDCCC")
+ '(custom-enabled-themes (quote (doom-one)))
+ '(custom-safe-themes
+   (quote
+    ("6b2636879127bf6124ce541b1b2824800afc49c6ccd65439d6eb987dbf200c36" "75d3dde259ce79660bac8e9e237b55674b910b470f313cdf4b019230d01a982a" "6d589ac0e52375d311afaa745205abb6ccb3b21f6ba037104d71111e7e76a3fc" "d2e9c7e31e574bf38f4b0fb927aaff20c1e5f92f72001102758005e53d77b8c9" "a3fa4abaf08cc169b61dea8f6df1bbe4123ec1d2afeb01c17e11fdc31fc66379" "7e78a1030293619094ea6ae80a7579a562068087080e01c2b8b503b27900165c" "3cc2385c39257fed66238921602d8104d8fd6266ad88a006d0a4325336f5ee02" "3cd28471e80be3bd2657ca3f03fbb2884ab669662271794360866ab60b6cb6e6" "72a81c54c97b9e5efcc3ea214382615649ebb539cb4f2fe3a46cd12af72c7607" "d057f0430ba54f813a5d60c1d18f28cf97d271fd35a36be478e20924ea9451bd" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "96998f6f11ef9f551b427b8853d947a7857ea5a578c75aa9c4e7c73fe04d10b4" "58c6711a3b568437bab07a30385d34aacf64156cc5137ea20e799984f4227265" default)))
+ '(linum-format " %7i ")
+ '(lsp-ui-doc-enable t)
+ '(lsp-ui-imenu-enable t)
+ '(lsp-ui-peek-enable t)
+ '(nrepl-message-colors
+   (quote
+    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
+ '(package-selected-packages
+   (quote
+    (counsel swiper ivy evil-collection doom-modeline esup flycheck treemacs-projectile treemacs-evil treemacs doom-themes zenburn-theme ace-window all-the-icons solarized-theme google-c-style cmake-ide ccls projectile company-lsp lsp-ui lsp-mode use-package sublime-themes evil)))
+ '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
+ '(projectile-project-root-files-top-down-recurring
+   (quote
+    ("compile_commands.json" ".ccls" ".svn" "CVS" "Makefile"))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+( if window-system
+    (tool-bar-mode -1)
+)
+

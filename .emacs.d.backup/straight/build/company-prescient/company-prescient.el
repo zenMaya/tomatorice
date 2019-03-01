@@ -1,0 +1,1 @@
+/home/yachimm_thomasegh/.emacs.d/straight/repos/prescient.el/company-prescient.el

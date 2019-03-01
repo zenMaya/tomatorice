@@ -9,10 +9,10 @@ set -Ux GIT_EDITOR nvim
 
 ##############ALIASES##############
 function ls
-    command ls --color=auto $argv
+    command ls --color=never $argv
 end
 function lsa
-    command ls -cClAh --color=auto $argv
+    command ls -cClAhG --color=never $argv
 end
 
 function config

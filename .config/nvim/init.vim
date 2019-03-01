@@ -6,7 +6,9 @@ Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
 Plug 'dag/vim-fish'
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/goyo.vim'
 Plug 'amix/vim-zenroom2'
 "Plug 'Valloric/YouCompleteMe'
@@ -46,7 +48,7 @@ call plug#end()
     set splitbelow          " Horizontal split below current.
     set splitright          " Vertical split to right of current.
 
-    let mapleader=' '
+    l mapleader=' '
     nnoremap ; :
     nnoremap <C-J> <C-W><C-J>
     nnoremap <C-K> <C-W><C-K>
@@ -141,7 +143,7 @@ call plug#end()
 
 "ALE
 
-"    let g:ale_completion_enabled = 1
+    let g:ale_completion_enabled = 1
     let g:ale_open_list = 1
 " Set this if you want to.
 " This can be useful if you are combining ALE with
@@ -157,19 +159,19 @@ call plug#end()
     let g:vimtex_compiler_progname = 'nvr'
 
 " if hidden not set, TextEdit might fail.
-set hidden
+  set hidden
 
 " Better display for messages
-set cmdheight=2
+  "set cmdheight=2
 
 " Smaller updatetime for CursorHold & CursorHoldI
-set updatetime=300
+  set updatetime=300
 
 " don't give |ins-completion-menu| messages.
-set shortmess+=c
+  set shortmess+=c
 
 " always show signcolumns
-set signcolumn=yes
+  set signcolumn=yes
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -196,58 +198,58 @@ nmap <silent> [c <Plug>(coc-diagnostic-prev)
 nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+  nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gy <Plug>(coc-type-definition)
+  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gr <Plug>(coc-references)
 
 " Use K for show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+  nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-function! s:show_documentation()
-  if &filetype ==? 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+  function! s:show_documentation()
+    if &filetype ==? 'vim'
+     execute 'h '.expand('<cword>')
+    else
+      call CocAction('doHover')
+    endif
+  endfunction
 
 " Highlight symbol under cursor on CursorHold
-augroup autocmd CursorHold * silent call CocActionAsync('highlight')
+  augroup autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+  nmap <leader>rn <Plug>(coc-rename)
 
 " Remap for format selected region
-vmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+  vmap <leader>f  <Plug>(coc-format-selected)
+  nmap <leader>f  <Plug>(coc-format-selected)
 
-augroup mygroup
-  autocmd!
+  augroup mygroup
+    autocmd!
   " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
+    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+  augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-vmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+  vmap <leader>a  <Plug>(coc-codeaction-selected)
+  nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
+  nmap <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
+  nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Use `:Format` for format current buffer
-command! -nargs=0 Format :call CocAction('format')
+  command! -nargs=0 Format :call CocAction('format')
 
 " Use `:Fold` for fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+  command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 
 " Add diagnostic info for https://github.com/itchyny/lightline.vim
-let g:lightline = {
+  let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
@@ -257,4 +259,11 @@ let g:lightline = {
       \   'cocstatus': 'coc#status'
       \ },
       \ }
+" Vim Cpp Highlighting
+  let g:cpp_class_scope_highlight = 1
+  let g:cpp_member_variable_highlight = 1
+  let g:cpp_class_decl_highlight = 1
+  let g:cpp_experimental_simple_template_highlight = 1
+  let g:cpp_concepts_highlight = 1
+
     silent! helptags ALL

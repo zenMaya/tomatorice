@@ -1,0 +1,1 @@
+/home/yachimm_thomasegh/.emacs.d/straight/repos/emacs-git-gutter/git-gutter.el

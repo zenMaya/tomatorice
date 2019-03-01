@@ -1,0 +1,1 @@
+/home/yachimm_thomasegh/.emacs.d/straight/repos/f.el/f.el
