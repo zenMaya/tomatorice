@@ -48,7 +48,7 @@ call plug#end()
     set splitbelow          " Horizontal split below current.
     set splitright          " Vertical split to right of current.
 
-    l mapleader=' '
+    let mapleader=' '
     nnoremap ; :
     nnoremap <C-J> <C-W><C-J>
     nnoremap <C-K> <C-W><C-K>
