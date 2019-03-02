@@ -1,0 +1,32 @@
+[mediaplayer]
+command=~/.scripts/mediaplayer
+instance=spotify
+interval=5
+signal=10
+
+[volume-pulseaudio]
+command=~/.scripts/volume-pulseaudio
+interval=once
+signal=1
+
+# Query my default IP address only on startup
+[ip]
+command=hostname -i | awk '{ print "IP:" $1 }'
+interval=once
+color=#91E78B
+
+[window]
+command=xtitle -s
+interval=persist
+
+[pacman-updates]
+command=~/.scripts/arch-update.py -a -q -w "^linux.* ^pacman.*" -b "#5fff5f" -u "#FFFF85"
+markup=pango
+interval= 3600
+
+# Update time every 5 seconds
+[time]
+command=date +%T
+interval=1
+
+
