@@ -4,7 +4,7 @@
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (toggle-scroll-bar -1)
-(tool-bar-mode -1) 
+(tool-bar-mode -1)
 
 (eval-when-compile (require 'use-package))
 ;;-------------------------------------------------------------------------------
@@ -24,7 +24,10 @@
 
 ;;-------------------------------------------------------------------------------
 (use-package hydra)
+(use-package which-key)
 (use-package move-text)
+(use-package avy
+  :bind ( "M-j" . avy-goto-word-or-subword-1))
 ;;-------------------------------------------------------------------------------
 (use-package lsp-mode
   :hook (prog-mode . lsp)
@@ -126,7 +129,7 @@
     ("/home/yachimm_thomasegh/projects/cadump-compiler")))
  '(package-selected-packages
    (quote
-    (flycheck-clangcheck flycheck-clang-tidy flycheck-clang-analyzer flycheck lsp-ui git-gutter treemacs-magit treemacs-projectile cmake-ide cmake-font-lock ccls cmake-mode doom-themes doom-modeline company helm-projectile projectile helm treemacs move-text use-package hydra))))
+    (which-key flycheck-clangcheck flycheck-clang-tidy flycheck-clang-analyzer flycheck lsp-ui git-gutter treemacs-magit treemacs-projectile cmake-ide cmake-font-lock ccls cmake-mode doom-themes doom-modeline company helm-projectile projectile helm treemacs move-text use-package hydra))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
