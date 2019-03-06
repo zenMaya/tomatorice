@@ -40,5 +40,5 @@ function pacsrub
 end
 
 if status --is-login
-   config pull
+   config pull &
 end
