@@ -10,7 +10,7 @@ set -Ux GIT_EDITOR nvim
 ##############ALIASES##############
 function ls
     command ls --color=never $argv
-end
+nend
 function lsa
     command ls -cClAhG --color=never $argv
 end
@@ -37,4 +37,8 @@ function pacsyyu
 end
 function pacsrub
     command sudo pacman -S ruby-$argv
+end
+
+if status --is-login
+   config pull
 end
