@@ -81,79 +81,85 @@
   (add-hook 'org-mode-hook (lambda ()
      (org-bullets-mode 1))))
 #+END_SRC
-* Language specific
-** Rust
-*** Rust Mode
+* Programming
+** General
+*** Flycheck
 #+BEGIN_SRC emacs-lisp
-(use-package rust-mode)
+(use-package flycheck)
 #+END_SRC
-*** Cargo
-#+BEGIN_SRC emacs-lisp
-(use-package cargo
-  :hook (rust-mode . cargo-minor-mode))
-#+END_SRC
-*** Flycheck Rust
-#+BEGIN_SRC emacs-lisp
-(use-package flycheck-rust
-  :hook (rust-mode . flycheck-mode))
-#+END_SRC
-*** Racer
-#+BEGIN_SRC emacs-lisp
-(use-package racer
-  :hook (rust-mode . racer-mode))
-#+END_SRC
-*** Company Racer
-#+BEGIN_SRC emacs-lisp
-(use-package company-racer)
-#+END_SRC
-** C++/C
-*** ccls
-#+BEGIN_SRC emacs-lisp
-(use-package ccls
-  :after projectile
-  :custom
-  (ccls-args nil)
-  (ccls-executable (executable-find "ccls"))
-  (projectile-project-root-files-top-down-recurring
-   (append '("compile_commands.json" ".ccls")
-	   projectile-project-root-files-top-down-recurring))
-  :config (push ".ccls-cache" projectile-globally-ignored-directories))
-#+END_SRC
-*** Cmake
-#+BEGIN_SRC emacs-lisp 
-(use-package cmake-mode
-  :mode ("CMakeLists\\.txt\\'" "\.cmake\\'"))
+** Language specific
+*** Rust
+**** Rust Mode
+ #+BEGIN_SRC emacs-lisp
+ (use-package rust-mode)
+ #+END_SRC
+**** Cargo
+ #+BEGIN_SRC emacs-lisp
+ (use-package cargo
+   :hook (rust-mode . cargo-minor-mode))
+ #+END_SRC
+**** Flycheck Rust
+ #+BEGIN_SRC emacs-lisp
+ (use-package flycheck-rust
+   :hook (rust-mode . flycheck-mode))
+ #+END_SRC
+**** Racer
+ #+BEGIN_SRC emacs-lisp
+ (use-package racer
+   :hook (rust-mode . racer-mode))
+ #+END_SRC
+**** Company Racer
+ #+BEGIN_SRC emacs-lisp
+ (use-package company-racer)
+ #+END_SRC
+*** C++/C
+**** ccls
+ #+BEGIN_SRC emacs-lisp
+ (use-package ccls
+   :after projectile
+   :custom
+   (ccls-args nil)
+   (ccls-executable (executable-find "ccls"))
+   (projectile-project-root-files-top-down-recurring
+    (append '("compile_commands.json" ".ccls")
+	    projectile-project-root-files-top-down-recurring))
+   :config (push ".ccls-cache" projectile-globally-ignored-directories))
+ #+END_SRC
+**** Cmake
+ #+BEGIN_SRC emacs-lisp 
+ (use-package cmake-mode
+   :mode ("CMakeLists\\.txt\\'" "\.cmake\\'"))
 
-(use-package cmake-font-lock
-  :after (cmake-mode)
-  :hook (cmake-mode . cmake-font-lock-activate))
+ (use-package cmake-font-lock
+   :after (cmake-mode)
+   :hook (cmake-mode . cmake-font-lock-activate))
 
-(use-package cmake-ide
-  :after projectile
-  :hook (c++-mode . my/cmake-ide-find-project)
-  :preface
-  (defun my/cmake-ide-find-project ()
-    "Finds the directory of the project for cmake-ide."
-    (with-eval-after-load 'projectile
-      (setq cmake-ide-project-dir (projectile-project-root))
-      (setq cmake-ide-build-dir (concat cmake-ide-project-dir "build")))
-    (setq cmake-ide-compile-command (concat "cd " cmake-ide-build-dir " && make"))
-    (cmake-ide-load-db))
+ (use-package cmake-ide
+   :after projectile
+   :hook (c++-mode . my/cmake-ide-find-project)
+   :preface
+   (defun my/cmake-ide-find-project ()
+     "Finds the directory of the project for cmake-ide."
+     (with-eval-after-load 'projectile
+       (setq cmake-ide-project-dir (projectile-project-root))
+       (setq cmake-ide-build-dir (concat cmake-ide-project-dir "build")))
+     (setq cmake-ide-compile-command (concat "cd " cmake-ide-build-dir " && make"))
+     (cmake-ide-load-db))
 
-  (defun my/switch-to-compilation-window ()
-    "Switches to the *compilation* buffer after compilation."
-    (other-window 1))
-  :bind ([remap comment-region] . cmake-ide-compile)
-  :init (cmake-ide-setup)
-  :config (advice-add 'cmake-ide-compile :after #'my/switch-to-compilation-window))
-#+END_SRC
-*** Google C style
-#+BEGIN_SRC emacs-lisp
-(use-package google-c-style
-  :hook ((c-mode c++-mode) . google-set-c-style)
-         (c-mode-common . google-make-newline-indent))
+   (defun my/switch-to-compilation-window ()
+     "Switches to the *compilation* buffer after compilation."
+     (other-window 1))
+   :bind ([remap comment-region] . cmake-ide-compile)
+   :init (cmake-ide-setup)
+   :config (advice-add 'cmake-ide-compile :after #'my/switch-to-compilation-window))
+ #+END_SRC
+**** Google C style
+ #+BEGIN_SRC emacs-lisp
+ (use-package google-c-style
+   :hook ((c-mode c++-mode) . google-set-c-style)
+          (c-mode-common . google-make-newline-indent))
 
-#+END_SRC
+ #+END_SRC
 * Not set yet
 #+BEGIN_SRC emacs-lisp
 ;;-------------------------------------------------------------------------------
@@ -216,22 +222,4 @@
 ;;  :ensure t
 ;;  :options
 ;;  (setq mail-user-agent 'mu4e-user-agent))
-;;-----------------------------------------------------------------------------
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ede-project-directories
-   (quote
-    ("/home/yachimm_thomasegh/projects/cadump-compiler")))
- '(package-selected-packages
-   (quote
-    (org-bullets which-key flycheck-clangcheck flycheck-clang-tidy flycheck-clang-analyzer flycheck lsp-ui git-gutter treemacs-magit treemacs-projectile cmake-ide cmake-font-lock ccls cmake-mode doom-themes doom-modeline company helm-projectile projectile helm treemacs move-text use-package hydra))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 #+END_SRC
