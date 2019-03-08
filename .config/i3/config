@@ -134,6 +134,9 @@ bindsym XF86AudioPlay           exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPrev           exec --no-startup-id playerctl previous
 bindsym XF86AudioStop           exec --no-startup-id playerctl stop
 
+bindsym XF86MonBrightnessUp     exec --no-startup-id xbacklight -inc 5
+bindsym XF86MonBrightnessDown   exec --no-startup-id xbacklight -dec 5
+
 mode "application_launcher" {
     bindsym t         exec $term
 

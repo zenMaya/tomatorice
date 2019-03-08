@@ -24,6 +24,13 @@ command=~/.scripts/arch-update.py -a -q -w "^linux.* ^pacman.*" -b "#5fff5f" -u 
 markup=pango
 interval= 3600
 
+[batterybar]
+command=~/.scripts/batterybar
+label=bat:
+interval=5
+markup=pango
+min_width=bat: ■■■■■
+
 # Update time every 5 seconds
 [time]
 command=date +%T
