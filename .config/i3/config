@@ -25,6 +25,9 @@ exec --no-startup-id dunst
 # Composite manager:
 exec --no-startup-id compton
 
+exec --no-startup-id nm-applet
+exec --no-startup-id blueman-applet
+
 # # #---Basic Bindings---# #
 bindsym $mod+Shift+space  floating toggle
 bindsym $mod+space      focus mode_toggle
@@ -130,6 +133,9 @@ bindsym XF86AudioNext           exec --no-startup-id playerctl next
 bindsym XF86AudioPlay           exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPrev           exec --no-startup-id playerctl previous
 bindsym XF86AudioStop           exec --no-startup-id playerctl stop
+
+bindsym XF86MonBrightnessUp     exec --no-startup-id xbacklight -inc 5
+bindsym XF86MonBrightnessDown   exec --no-startup-id xbacklight -dec 5
 
 mode "application_launcher" {
     bindsym t         exec $term
