@@ -10,7 +10,7 @@ set -Ux GIT_EDITOR nvim
 ##############ALIASES##############
 function ls
     command ls --color=never $argv
-nend
+end
 function lsa
     command ls -cClAhG --color=never $argv
 end

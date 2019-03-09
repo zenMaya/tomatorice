@@ -82,6 +82,30 @@
      (org-bullets-mode 1))))
 #+END_SRC
 * Language specific
+** Rust
+*** Rust Mode
+#+BEGIN_SRC emacs-lisp
+(use-package rust-mode)
+#+END_SRC
+*** Cargo
+#+BEGIN_SRC emacs-lisp
+(use-package cargo
+  :hook (rust-mode . cargo-minor-mode))
+#+END_SRC
+*** Flycheck Rust
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck-rust
+  :hook (rust-mode . flycheck-mode))
+#+END_SRC
+*** Racer
+#+BEGIN_SRC emacs-lisp
+(use-package racer
+  :hook (rust-mode . racer-mode))
+#+END_SRC
+*** Company Racer
+#+BEGIN_SRC emacs-lisp
+(use-package company-racer)
+#+END_SRC
 ** C++/C
 *** ccls
 #+BEGIN_SRC emacs-lisp
@@ -130,31 +154,6 @@
          (c-mode-common . google-make-newline-indent))
 
 #+END_SRC
-
-** Rust
-*** Rust Mode
-#+BEGIN_SRC emacs-lisp
-(use-package rust-mode)
-#+END_SRC
-*** Cargo
-#+BEGIN_SRC emacs-lisp
-(use-package cargo
-  :hook (rust-mode . cargo-minor-mode))
-#+END_SRC
-*** Flycheck Rust
-#+BEGIN_SRC emacs-lisp
-(use-package flycheck-rust
-  :hook (rust-mode . flycheck-mode))
-#+END_SRC
-*** Racer
-#+BEGIN_SRC emacs-lisp
-(use-package racer
-  :hook (rust-mode . racer-mode))
-#+END_SRC
-*** Company Racer
-#+BEGIN_SRC emacs-lisp
-(use-package company-racer)
-#+END_SRC
 * Not set yet
 #+BEGIN_SRC emacs-lisp
 ;;-------------------------------------------------------------------------------
@@ -184,7 +183,7 @@
   (company-tng-configure-default)
 
   :hook (prog-mode . global-company-mode)
-  :bind ( "C-TAB" . company-complete))
+  :bind ( "C tab" . company-complete))
 (use-package company-lsp
   :commands company-lsp
   :config (push `company-lsp company-backends))
@@ -200,12 +199,14 @@
 (use-package treemacs)
 (use-package treemacs-projectile)
 (use-package projectile)
+(use-package fic-mode
+  :hook (prog-mode . fic-mode))
 
 
 ;; Shift arrows to move between windows
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
-(load-file "~/.emacs.d/hydra-moving.el")
+(load-file "~/.config/emacs/hydra-moving.el")
 
 
 
