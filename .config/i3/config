@@ -28,6 +28,13 @@ exec --no-startup-id compton
 exec --no-startup-id nm-applet
 exec --no-startup-id blueman-applet
 
+#exec email client
+for_window [class="tutanota-desktop"] move container to workspace 10
+exec tutanota-desktop-linux
+
+for_window [class="Firefox"] move container to workspace 2
+exec firefox
+
 # # #---Basic Bindings---# #
 bindsym $mod+Shift+space  floating toggle
 bindsym $mod+space      focus mode_toggle
@@ -224,3 +231,5 @@ bar {
     urgent_workspace $darkblack $darkblack $white
   }
 }
+
+
