@@ -189,7 +189,7 @@
   (company-tng-configure-default)
 
   :hook (prog-mode . global-company-mode)
-  :bind ( "C-TAB" . company-complete))
+  :bind ( "C-<tab>" . company-complete))
 (use-package company-lsp
   :commands company-lsp
   :config (push `company-lsp company-backends))
@@ -205,12 +205,14 @@
 (use-package treemacs)
 (use-package treemacs-projectile)
 (use-package projectile)
+(use-package fic-mode
+  :hook (prog-mode . fic-mode))
 
 
 ;; Shift arrows to move between windows
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
-(load-file "~/.emacs.d/hydra-moving.el")
+(load-file "~/.config/emacs/hydra-moving.el")
 
 
 
