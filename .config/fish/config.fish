@@ -4,8 +4,9 @@ set -U fish_user_paths $HOME/.scripts /home/yachimm_thomasegh/.gem/ruby/2.6.0/bi
 
 set -Ux TERMINAL termite
 set -Ux BROWSER firefox
-set -Ux EDITOR nvim
-set -Ux GIT_EDITOR nvim
+set -Ux EDITOR emacsclient -t
+set -Ux GIT_EDITOR emacsclient -t
+set -ux VISUAL emacsclient -c -a emacs
 
 ##############ALIASES##############
 function ls
@@ -17,6 +18,14 @@ end
 
 function config
   command /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $argv
+end
+
+function emacs
+  command emacsclient
+end
+
+function sudomacs
+  command set SUDO_EDITOR="emacsclient sudo -e"
 end
 
 #Pacman
