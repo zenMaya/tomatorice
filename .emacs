@@ -10,7 +10,7 @@
     ("/home/yachimm_thomasegh/projects/cadump-compiler")))
  '(package-selected-packages
    (quote
-    (company-racer racer org-bullets which-key flycheck-clangcheck flycheck-clang-tidy flycheck-clang-analyzer flycheck lsp-ui git-gutter treemacs-magit treemacs-projectile cmake-ide cmake-font-lock ccls cmake-mode doom-themes doom-modeline company helm-projectile projectile helm treemacs move-text use-package hydra))))
+    (git-gutter gitter doom-modeline doom-themes use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
