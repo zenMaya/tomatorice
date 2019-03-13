@@ -25,7 +25,7 @@ exec --no-startup-id dunst
 # Composite manager:
 exec --no-startup-id compton
 
-exec --no-startup-id libinput-gestures
+exec --no-startup-id libinput-gestures &
 
 exec --no-startup-id nm-applet
 exec --no-startup-id blueman-applet
