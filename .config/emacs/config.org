@@ -215,7 +215,7 @@
 (load-file "~/.config/emacs/hydra-moving.el")
 
 
-
+(global-set-key (kbd "s-q") 'delete-frame)
 
 ;;-------------------------------------------------------------------------------
 ;;THIS IS FOR C++/C

@@ -60,6 +60,7 @@ bindsym $mod+Tab        workspace back_and_forth
 bindsym $mod+q                [con_id="__focused__" instance="^(?!dropdown_).*$"] kill
 bindsym $mod+Shift+q          [con_id="__focused__" instance="^(?!dropdown_).*$"] kill
 bindsym $mod+w                exec --no-startup-id ducksearch
+bindsym $mod+e		      exec emacsclient -c -a emacs
 bindsym $mod+r                mode "resize"
 bindsym $mod+t                exec --no-startup-id sh ddspawn $TERMINAL
 bindsym $mod+u                exec --no-startup-id sh dmenuumount
