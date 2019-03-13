@@ -160,6 +160,16 @@
           (c-mode-common . google-make-newline-indent))
 
  #+END_SRC
+*** LaTeX
+**** Auctex
+#+BEGIN_SRC emacs-lisp
+(use-package auctex)
+#+END_SRC
+**** Auctex Company 
+#+BEGIN_SRC emacs-lisp
+(use-package company-auctex)
+#+END_SRC
+
 * Not set yet
 #+BEGIN_SRC emacs-lisp
 ;;-------------------------------------------------------------------------------
