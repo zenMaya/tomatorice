@@ -6,7 +6,7 @@ set -Ux TERMINAL termite
 set -Ux BROWSER firefox
 set -Ux EDITOR emacsclient -t
 set -Ux GIT_EDITOR emacsclient -t
-set -ux VISUAL emacsclient -c -a emacs
+set -Ux VISUAL emacsclient -c -a "emacs"
 
 ##############ALIASES##############
 function ls
