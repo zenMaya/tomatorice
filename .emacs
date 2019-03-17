@@ -10,7 +10,7 @@
     ("/home/yachimm_thomasegh/projects/cadump-compiler")))
  '(package-selected-packages
    (quote
-    (auctex-latexmk company-auctex auctex-company git-gutter gitter doom-modeline doom-themes use-package))))
+    (auctex-latexmk company-auctex auctex-company git-gutter gitter use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

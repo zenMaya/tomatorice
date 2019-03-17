@@ -24,45 +24,108 @@
 (global-set-key (kbd "C-c I") 'find-config)
 
 (global-visual-line-mode 1)
-(toggle-scroll-bar -1)
+(scroll-bar-mode -1)
 (tool-bar-mode -1)
+(fset 'yes-or-no-p 'y-or-n-p)      ; y and n instead of yes and no everywhere else
+(delete-selection-mode 1)
+(global-hl-line-mode 0)
 
-(use-package doom-themes
-  :init (load-theme 'doom-one t)
-  :config
-  (setq doom-themes-enable-bold t)
-  (setq doom-themes-enable-italic t)
-  (doom-themes-treemacs-config)
-  (doom-themes-org-config))
+(setq
+ inhibit-startup-message t         ; Don't show the startup message
+ inhibit-startup-screen t          ; or screen
+ cursor-in-non-selected-windows t  ; Hide the cursor in inactive windows
 
-(use-package doom-modeline
-  :hook (after-init . doom-modeline-mode))
+ echo-keystrokes 0.1               ; Show keystrokes right away, don't show the message in the scratch buffe
+ initial-scratch-message nil       ; Empty scratch buffer
+ initial-major-mode 'org-mode      ; org mode by default
+ sentence-end-double-space nil     ; Sentences should end in one space, come on!
+ confirm-kill-emacs 'y-or-n-p      ; y and n instead of yes and no when quitting with 'q'
+)
 
-(use-package all-the-icons)
+(load-theme 'deeper-blue t)
+
+(set-face-attribute 'default nil :font "Inconsolata 11")
+
+(set-face-background 'show-paren-match "grey84")
+(set-face-attribute 'show-paren-match nil :weight 'extra-bold)
+
+(setq column-number-mode t) ;; show columns in addition to rows in mode line
+(set-face-attribute 'mode-line nil :background "NavajoWhite")
+(set-face-attribute 'mode-line-inactive nil :background "#FAFAFA")
 
 (use-package git-gutter
   :hook (prog-mode . git-gutter-mode))
 
-(use-package org-bullets
+(use-package ivy
   :ensure t
-  :init
-  (add-hook 'org-mode-hook (lambda ()
-     (org-bullets-mode 1))))
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  (setq enable-recursive-minibuffers t)
+  (setq ivy-initial-inputs-alist nil)
+  (setq ivy-re-builders-alist
+      '((swiper . ivy--regex-plus)
+        (t      . ivy--regex-fuzzy)))   ;; enable fuzzy searching everywhere except for Swiper
 
-(use-package flycheck)
+  (global-set-key (kbd "s-b") 'ivy-switch-buffer)
+  ;; (global-set-key (kbd "M-s-b") 'ivy-resume)
+  )
+
+(use-package swiper
+  :config
+  ;; (global-set-key "\C-s" 'swiper)
+  ;; (global-set-key "\C-r" 'swiper)
+  (global-set-key (kbd "s-f") 'swiper))
+
+(use-package counsel
+  :config
+  (global-set-key (kbd "M-x") 'counsel-M-x)
+  (global-set-key (kbd "s-y") 'counsel-yank-pop)
+  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+  (global-set-key (kbd "s-p") 'counsel-git))
+
+(use-package smex)
+(use-package flx)
+(use-package avy)
+
+(setq-default indent-tabs-mode nil)
+(setq tab-width 2)
+
+(setq js-indent-level 2)
+(setq css-indent-offset 2)
+(setq-default c-basic-offset 2)
+(setq c-basic-offset 2)
+(setq-default tab-width 2)
+(setq-default c-basic-indent 2)
+
+(use-package company
+  :config
+  (setq company-idle-dalay 0)
+  (setq company-minimum-prefix-length 1)
+  (setq company-selection-wrap-around t)
+  (company-tng-configure-default)
+
+  :hook (prog-mode . global-company-mode)
+  :bind ( "C-<tab>" . company-complete))
+(use-package company-lsp
+  :commands company-lsp
+  :config (push `company-lsp company-backends))
+
+;; (use-package flycheck)
 
 (use-package rust-mode)
 
 (use-package cargo
   :hook (rust-mode . cargo-minor-mode))
 
-(use-package flycheck-rust
-  :hook (rust-mode . flycheck-mode))
+;;  (use-package flycheck-rust
+;;    :hook (rust-mode . flycheck-mode))
 
-(use-package racer
-  :hook (rust-mode . racer-mode))
+;;  (use-package racer
+;;    :hook (rust-mode . racer-mode))
 
-(use-package company-racer)
+;;  (use-package company-racer)
 
 (use-package ccls
   :after projectile
@@ -104,9 +167,19 @@
   :hook ((c-mode c++-mode) . google-set-c-style)
          (c-mode-common . google-make-newline-indent))
 
+;; (use-package auctex)
+
+;; (use-package company-auctex)
+
+(setq ispell-program-name "enchant-2")
+(add-hook 'text-mode-hook 'flyspell-mode)
+
 ;;-------------------------------------------------------------------------------
 (use-package hydra)
-(use-package which-key :ensure t)
+(use-package which-key
+  :config
+  (which-key-mode)
+  (setq which-key-idle-delay 0.5))
 (use-package move-text)
 (use-package avy
   :bind ( "M-j" . avy-goto-word-or-subword-1))
@@ -121,35 +194,6 @@
 
 (use-package lsp-ui
   :commands lsp-ui-mode)
-(use-package company-lsp :commands company-lsp)
-
-(use-package company
-  :config
-  (setq company-idle-dalay 0)
-  (setq company-minimum-prefix-length 1)
-  (setq company-selection-wrap-around t)
-  (company-tng-configure-default)
-
-  :hook (prog-mode . global-company-mode)
-  :bind ( "C-<tab>" . company-complete))
-(use-package company-lsp
-  :commands company-lsp
-  :config (push `company-lsp company-backends))
-
-;;------------------------------------------------------------------------------
-(use-package helm
-  :init (helm-mode 1)
-  :config
-  (global-set-key (kbd "M-x") #'helm-M-x)
-  (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
-  (global-set-key (kbd "C-x C-f") #'helm-find-files))
-;;-------------------------------------------------------------------------------
-(use-package treemacs)
-(use-package treemacs-projectile)
-(use-package projectile)
-(use-package fic-mode
-  :hook (prog-mode . fic-mode))
-
 
 ;; Shift arrows to move between windows
 (when (fboundp 'windmove-default-keybindings)
